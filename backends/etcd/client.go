@@ -106,6 +106,8 @@ func nodeWalk(node *client.Node, vars map[string]string) error {
 		key := node.Key
 		if !node.Dir {
 			vars[key] = node.Value
+		} else if len(node.Nodes) == 0 { // Libby loaded path even if empty dir.
+			vars[key] = ""
 		} else {
 			for _, node := range node.Nodes {
 				nodeWalk(node, vars)
