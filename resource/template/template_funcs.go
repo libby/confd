@@ -8,6 +8,7 @@ import (
 	"os"
 	"path"
 	"sort"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -30,6 +31,9 @@ func newFuncMap() map[string]interface{} {
 	m["lookupIP"] = LookupIP
 	m["lookupSRV"] = LookupSRV
 	m["fileExists"] = isFileExist
+	// Libby additions
+	m["add"] = AddInts
+	m["sub"] = SubInts
 	return m
 }
 
@@ -122,4 +126,18 @@ func LookupSRV(service, proto, name string) []*net.SRV {
 	}
 	sort.Sort(sortSRV(addrs))
 	return addrs
+}
+
+// Libby
+func AddInts(xstr string, ystr string) string {
+	x, _ := strconv.Atoi(xstr)
+	y, _ := strconv.Atoi(ystr)
+	return strconv.Itoa(x + y)
+}
+
+// Libby
+func SubInts(xstr string, ystr string) string {
+	x, _ := strconv.Atoi(xstr)
+	y, _ := strconv.Atoi(ystr)
+	return strconv.Itoa(x - y)
 }
